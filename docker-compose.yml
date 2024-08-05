@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+  buildingapi:
+    build:
+      context: .
+      dockerfile: BuildingAPI/Dockerfile
+    ports:
+      - "5001:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=database;Database=BuildingDB;Username=postgres;Password=yourpassword
+    depends_on:
+      - database
+
+  roomapi:
+    build:
+      context: .
+      dockerfile: RoomAPI/Dockerfile
+    ports:
+      - "5002:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=database;Database=RoomDB;Username=postgres;Password=yourpassword
+    depends_on:
+      - database
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ClassroomManagement/Dockerfile
+    ports:
+      - "4200:80"
+
+  database:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: BuildingDB
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: yourpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

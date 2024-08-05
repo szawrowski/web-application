@@ -1,0 +1,18 @@
+<div>
+  <h2>Create Building</h2>
+  <form (ngSubmit)="createBuilding()">
+    <div>
+      <label>Name:</label>
+      <input [(ngModel)]="building.name" name="name" required />
+    </div>
+    <div>
+      <label>Address:</label>
+      <input [(ngModel)]="building.address" name="address" required />
+    </div>
+    <div>
+      <label>Number of Floors:</label>
+      <input [(ngModel)]="building.numberOfFloors" name="numberOfFloors" type="number" required />
+    </div>
+    <button type="submit">Create</button>
+  </form>
+</div>
